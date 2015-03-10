@@ -1,0 +1,7 @@
+DBConfig.ini
+logs/
+composer.lock
+vendor/
+robots.txt
+uploads/
+mysql/

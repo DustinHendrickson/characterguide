@@ -1,0 +1,544 @@
+/*
+    Document   : frontend
+    Created on : Apr 4, 2011, 11:04:19 AM
+    Author     : Dustin
+    Description:
+        Purpose of the stylesheet follows#
+*/
+
+/* Main Site Styling */
+a:link { color: black; text-decoration: none; }      /* unvisited link */
+a:visited { color: black; text-decoration: none;}  /* visited link */
+a:hover { color: black; font-weight: bold; text-decoration: none; }  /* mouse over link */
+a:active { color: green; text-decoration: none; }   /* selected link */
+
+li a:hover { color: white; font-weight: bold; text-decoration: none; }  /* mouse over link */
+li a:link { color: white; font-weight: bold; text-decoration: none; }      /* unvisited link */
+li a:visited { color: white; font-weight: bold; text-decoration: none; }      /* unvisited link */
+
+nav ul ul li a:link { color: white; font-weight: bold; text-decoration: none; }      /* unvisited link */
+nav ul ul li a:visited { color: white; font-weight: bold; text-decoration: none; }      /* unvisited link */
+
+body{
+    padding: 0px;
+    margin: 0px;
+    height: 100%;
+    background-image: url(../img/SmallSquares_Dark.png);
+    background-color: White;
+    font-family: Lucida Grande, Helvetica, Arial, Verdana;
+}
+
+#BodyWrapper {
+    padding-top: 40px;
+    min-height: 100%;
+    height: auto !important;
+    height: 100%;
+    margin: 0 auto -175px; /* the bottom margin is the negative value of the footer's height */
+}
+
+#Header {
+    width: 100%;
+    height: 100px;
+/*  background-image: url(../img/HeaderBG.png);
+    background-repeat: repeat-x; */
+    background-color: rgba(255, 255, 255, 0.0); /* WHITE */
+}
+
+#Top-Bar {
+    width: 100%;
+    height: 38px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: Green;
+    margin-bottom: 10px;
+    border-left: solid Black;
+    border-right: solid Black;
+    border-bottom: solid Black;
+    border-width: 1px;
+    position:fixed;
+}
+
+#Public-Navigation {
+    width: 92%;
+    height: 95px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+    padding: 5px;
+    background-color: rgba(255, 255, 255, 0.3);
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+    border-top: solid Black;
+    border-bottom: solid Black;
+    border-width: 2px;
+    overflow: hidden;
+}
+
+
+#Content {
+    width: 90%;
+    height: auto;
+    min-height: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 15px;
+    background-color: rgba(255, 255, 255, 1.0); /* WHITE */
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+    border-style: solid;
+    border-color: Black;
+    border-width: 2px;
+}
+
+.BorderBox {
+    width: 90%;
+    height: auto;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 15px;
+    background-color: rgba(255, 255, 255, 1.0); /* WHITE */
+    -moz-border-radius: 15px;
+    border-radius: 15px;
+    border-style: solid;
+    border-color: Black;
+    border-width: 2px;
+}
+
+.ContentHeader {
+    font-style: bold;
+    font-size: 20px;
+}
+
+
+#Footer {
+    clear: both;
+    width: 100%;
+    height: 300px;
+    position: relative;
+    border-top: solid Black;
+    border-width: 2px;
+    background-color: White;
+    background-image: url(../img/SubtleGrey_Light.png);
+    margin-top: 20px;
+    z-index: 10;
+}
+
+.Push {
+    height: 150px;
+}
+
+.Clear {
+    clear: both;
+}
+
+/* Details CSS Styling */
+
+.Login_Area {
+    float: left;
+    padding: 10px;
+}
+
+.PrivateNavItem {
+    float: right;
+    text-align: center;
+    width: 110px;
+    padding-top: 10px;
+}
+
+.PrivateNavItem a:hover {
+    background-color: black;
+    color: green;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.Logo {
+    position:relative;
+    z-index: -1;
+    background-image: url(../img/smLogo.png);
+    background-repeat: no-repeat;
+    display:block;
+    height: 100px;
+}
+
+/* Navigation Items */
+
+.NavItem {
+    height: 100px;
+    width: 100px;
+    margin: 0 auto;
+    text-align: center;
+    padding-left: 1%;
+    padding-right: 1%;
+    float: left;
+}
+
+
+/* END OF Navigation Items */
+
+.BlogWrapper {
+    width: 95%;
+    background-color: White;
+    padding: 10px;
+    border-style: solid;
+    border-color: black;
+    border-width: 1px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 1%;
+}
+
+/* Blog */
+.BlogTitle {
+    color: darkgrey;
+    font-size: large;
+}
+
+.BlogBody {
+    font-style: italic;
+    font-size: medium;
+}
+
+.BlogCreation {
+    color: grey;
+    font-size: small;
+}
+
+.CommentWrapper {
+    width: 95%;
+    background-color: White;
+    padding: 1px;
+    margin-bottom: 10px;
+    margin-left: 1%;
+}
+
+.CommentDate {
+    color: grey;
+    font-size: small;
+}
+
+.CommentUsername {
+    font-style: bold;
+    font-size: large;
+}
+
+.CommentText {
+    font-style: italic;
+    font-size: medium;
+}
+
+/* Pagination */
+.Pagination {
+    margin: 10px;
+    height:20px;
+    padding-bottom:5px;
+    width: 100%;
+}
+
+.Page {
+    float: left;
+    font-size: large;
+    width: 10px;
+    padding: 4px;
+}
+.Page a:hover {
+    color: Black;
+    text-decoration: none;
+}
+.Page a:visited {
+    color: Black;
+    text-decoration: none;
+}
+.Page a:link {
+    color: Black;
+    text-decoration: none;
+}
+
+.Current_Page {
+    background-color: Green;
+    font-color: White;
+    font-size: larger;
+    float: left;
+    width: 10px;
+    padding: 4px;
+}
+
+.Current_Page a:hover {
+    color: White;
+    text-decoration: none;
+}
+.Current_Page a:visited {
+    color: White;
+    text-decoration: none;
+}
+.Current_Page a:link {
+    color: White;
+    text-decoration: none;
+}
+
+/* General System */
+
+#Login-Error {
+    color: red;
+    background-color: pink;
+    margin: 1px;
+    padding: 2px;
+    border: 1px solid red;
+}
+
+.BlackBox {
+    color: black;
+    background-color: white;
+    padding: 2px;
+    margin: 2px;
+    border: 1px solid black;
+}
+
+.Error {
+    color: red;
+    background-color: pink;
+    padding: 2px;
+    margin: 2px;
+    border: 1px solid red;
+}
+
+.Success {
+    color: green;
+    background-color: lightgreen;
+    padding: 2px;
+    margin: 2px;
+    border: 1px solid green;
+}
+
+.LogRed {
+    color: red;
+    background-color: pink;
+    padding: 2px;
+    margin: 2px;
+    border: 1px solid red;
+}
+
+.LogBlue {
+    color: blue;
+    background-color: lightblue;
+    padding: 2px;
+    margin: 2px;
+    border: 1px solid blue;
+}
+
+.LogGreen {
+    color: green;
+    background-color: lightgreen;
+    padding: 2px;
+    margin: 2px;
+    border: 1px solid green;
+}
+
+.LogYellow {
+    color: yellow;
+    background-color: lightyellow;
+    padding: 2px;
+    margin: 2px;
+    border: 1px solid yellow;
+}
+
+.LogOrange {
+    color: orange;
+    background-color: lightyellow;
+    padding: 2px;
+    margin: 2px;
+    border: 1px solid orange;
+}
+
+.LogGrey {
+    color: grey;
+    background-color: lightgrey;
+    padding: 2px;
+    margin: 2px;
+    border: 1px solid grey;
+}
+
+.404image {
+    background:url(../img/whoopsie.png);
+    width:100%;
+    height:100%;
+}
+
+
+nav {
+    margin-top: -16px;
+    text-align: center;
+    z-index: 150;
+}
+
+nav ul ul {
+    display: none;
+}
+
+nav ul li:hover > ul {
+    display: block;
+}
+
+nav ul {
+    background: darkgreen;
+    box-shadow: 0px 0px 35px rgba(0,0,0,0.35);
+    padding: 0 5px;
+    list-style: none;
+    position: relative;
+    display: inline-table;
+}
+nav ul:after {
+    content: ""; clear: both; display: block;
+}
+
+nav ul li {
+    float: left;
+}
+
+nav ul li:hover {
+    background-image: url(../img/SubtleGrey_Light.png);
+}
+
+nav ul li:hover a {
+    color: black;
+}
+
+nav ul li a {
+    display: block; padding: 10px 40px;
+    color: #757575; text-decoration: none;
+}
+
+nav ul ul {
+    background: darkgreen;
+    border-radius: 0px;
+    padding: 0;
+    position: absolute; top: 100%;
+}
+nav ul ul li {
+    float: none;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black; position: relative;
+}
+nav ul ul li a {
+    padding: 5px 30px;
+    color: #fff;
+}
+nav ul ul li a:hover {
+    background-image: url(../img/SubtleGrey_Light.png);
+    color: black;
+}
+
+nav ul ul ul {
+    position: absolute; left: 100%; top:0;
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background: #333;
+    background-image: -webkit-linear-gradient(left, #ccc, #333, #ccc);
+    background-image:    -moz-linear-gradient(left, #ccc, #333, #ccc);
+    background-image:     -ms-linear-gradient(left, #ccc, #333, #ccc);
+    background-image:      -o-linear-gradient(left, #ccc, #333, #ccc);
+}
+
+.Points {
+    color: grey;
+}
+
+.pointrefresh {
+
+}
+
+.PetBattleScreen {
+    background-image: url(../petbattles/images/bg/forestbg.png);
+    border-style: solid;
+    border-width: 2px;
+    border-color: black;
+    margin-left: auto;
+    margin-right: auto;
+    width: 400px;
+    height: 235px;
+    z-index: 1;
+}
+
+.PetBattleAttacker {
+    position: relative;
+    left: 40px;
+    top: 145px;
+    width: 65px;
+    height: 65px;
+    z-index: 2;
+}
+
+.PetBattleDefender {
+    position: relative;
+    left: 270px;
+    top: 35px;
+    width: 65px;
+    height: 65px;
+    z-index: 2;
+}
+
+.PetBorderLeft {
+    float: left;
+    display:block;
+    color: black;
+    width: 300px;
+    background-color: red;
+    padding: 2px;
+    margin: 2px;
+    border: 1px solid black;
+}
+
+.PetBorderRight {
+    display:block;
+    float: left;
+    color: black;
+    width: 300px;
+    background-color: white;
+    padding: 2px;
+    margin: 2px;
+    border: 1px solid black;
+}
+
+.PetBlackBox {
+    color: black;
+    background-image: url("../img/SubtleGrey_Light.png");
+    padding: 2px;
+    margin: 2px;
+    border: 1px solid black;
+}
+
+.PetBorderContainer {
+    width: 700px;
+    background: #fff;
+}
+.clear {
+    clear:both;
+}
+
+.container {
+    position: relative;
+    width: 100%;
+    height: 50%;
+}
+.container div {
+    height: 100%;
+}
+
+.column-left {
+    width: 33%;
+    left: 0;
+    position: absolute;
+}
+.column-center {
+    width: 34%;
+    margin-left: 33%;
+    position: absolute;
+}
+.column-right {
+    width: 33%;
+    right: 0;
+    position: absolute;
+}
