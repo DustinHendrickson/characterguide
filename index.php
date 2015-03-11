@@ -34,7 +34,7 @@ Write_Log('views',"Site has logged a page view.");
 
 <?PHP
     $View = explode("_", $_GET['view']);
-    if ($View[0] != "petbattle") { ?>
+?>
 
         <div id="Header">
             <a href='/' class="Logo"></a>
@@ -43,7 +43,6 @@ Write_Log('views',"Site has logged a page view.");
         <div id="Public-Navigation">
             <?php Navigation::write_Public(); ?>
         </div>
-<?PHP } ?>
         <div id="Content">
             <?php Functions::Display_View(Functions::Get_View()); ?>
         </div>
@@ -107,9 +106,6 @@ Write_Log('views',"Site has logged a page view.");
     </BODY>
 </HTML>
 <?php
-//Daily Quests Completion
-$Pet = new BattlePet($_SESSION['ID']);
-$Pet->Check_If_Daily_Quest_Completed();
 
 //Toasts::displayAllToasts();
 if (!empty($User->Config_Settings["Show_Toasts"])) {

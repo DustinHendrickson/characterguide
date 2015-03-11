@@ -30,7 +30,6 @@ class Navigation {
             echo "<li><a href='#'>Staff</a>";
             echo "<ul>";
             echo "<li><a href='?view=blog_admin'>Blog Admin</a></li>";
-            echo "<li><a href='?view=servers'>View Servers</a></li>";
             echo "<li><a href='?view=edit_user'>Edit Users</a></li>";
             echo "<li><a href='?view=upload'>Upload File</a></li>";
             echo "</ul></li>";
@@ -39,13 +38,7 @@ class Navigation {
             echo "<li><a href='#'>User</a>";
             echo "<ul>";
             echo "<li><a href='?view=settings'>Settings</a></li>";
-            echo "<li><a href='?view=fightbot'>FightBot</a></li>";
             echo "<li><a href='?view=points'>Points</a></li>";
-            echo "<li><a href='?view=bnet'>Battle.Net Status</a></li>";
-            echo "<li><a href='?view=achievements'>Achievements</a></li>";
-            echo "<li><a href='?view=emulator'>Web Emulator</a></li>";
-            echo "<li><a href='?view=petbattle_home'>Pet Battles</a></li>";
-            echo "<li><a href='?view=snake'>Snake</a></li>";
             echo "</ul></li>";
 
             echo "</ul></nav>";
@@ -82,12 +75,10 @@ class Navigation {
     {
         $Nav_Items = array();
 
-        array_push($Nav_Items, "<div class='NavItem'><a href='?view=blog'><img width='75' height='75' src='img/News.png'></img> Blog</a></div>\n");
-        array_push($Nav_Items, "<div class='NavItem'><a href='?view=aboutme'><img width='75' height='75' src='img/Staff.png'></img> About Me</a></div>\n");
-        array_push($Nav_Items, "<div class='NavItem'><a href='?view=projects'><img width='75' height='75' src='img/Products.png'></img> Projects</a></div>\n");
-        array_push($Nav_Items, "<div class='NavItem'><a href='?view=resume'><img width='75' height='75' src='img/Services.png'></img> Resume</a></div>\n");
+        array_push($Nav_Items, "<div class='NavItem'><a href='?view=blog'><img width='75' height='75' src='img/News.png'></img> Updates</a></div>\n");
+        array_push($Nav_Items, "<div class='NavItem'><a href='?view=aboutme'><img width='75' height='75' src='img/Staff.png'></img> About Us</a></div>\n");
+        array_push($Nav_Items, "<div class='NavItem'><a href='?view=projects'><img width='75' height='75' src='img/Products.png'></img> Services</a></div>\n");
         array_push($Nav_Items, "<div class='NavItem'><a href='?view=contact'><img width='75' height='75' src='img/Contact.png'></img> Contact</a></div>\n");
-        array_push($Nav_Items, "<div class='NavItem'><a href='?view=media'><img width='75' height='75' src='img/Gallery.png'></img> Media</a></div>\n");
 
         foreach($Nav_Items as $Nav_Item){
             echo $Nav_Item;
