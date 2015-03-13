@@ -1,0 +1,48 @@
+Character Guide (working title)
+
+Web service that helps CD’s sort their auditions, and voice over actors sort their character voices, in an easy-to-read grid that can be sorted by a number of categories and contain audio/video clips of the auditions.  We monetize by charging a one-time sign-up fee for each project, but allow them to share links to completed projects with their colleagues free of charge.
+
+-----------------------
+Step 1: Input project details.  Title, Number of Scenes/Chapters, Additional Criteria
+
+Title: the title of the project
+
+Number of Scenes/Chapters: How many scenes are in the movie, chapters are in the audiobook, etc.
+
+Additional Criteria: If the user wishes to be able to sort their auditions by anything other than the standard methods (Alphabetical, Order of Appearance, Number of Appearances), or add a category for notes to be added on each audition (Ex: Ethnicity, Special Skills Required, Motion Capture Required, etc.), they may add custom categories at the initial set-up phase.
+-----------------------
+
+-----------------------
+Step 2: Input roles. Name, Appearances, Description, Gender, and any Additional Criteria categories created in set-up.
+
+Name: The name of the role or character.  Used for alphabetical sort method.
+
+Appearances: Check boxes to indicate which scenes/chapters the role or character appears in.  Used for Number of Appearances and Order of Appearance sort methods.
+
+Description: A general text entry box to type general notes about the role or character.
+
+Gender: Male, Female, Not specified, or Other.
+
+ 
+Sort functionality begins working now.
+-----------------------
+
+
+-----------------------
+Step 3: Upload auditions.
+
+Two methods.  The first is to upload your favorite audition for each role and leave it at that (most useful for audiobook narrators and other VO actors sorting their own characters, or for CD’s auditioning a one role project).  The second is to upload multiple auditions for each role/character and mark 1 to 5 star ratings for each.  Associates’ ratings will be separate from the user’s.  There will also be a field to enter notes for each audition, but this is only accessible by the user, not his/her associates.  Alternate version of the second method is to allow actors who are auditioning for role(s) upload their own auditions to the project (one take per role).
+
+Drag and drop an audio or video file on to a role/character.  This will start the upload process.  During or after upload, you may type in the actor’s name in the name blank, and type notes for the actor in the notes blank.  You may also rate the actor with 1 to 5 stars.
+-----------------------
+
+
+-----------------------
+Step 4: Rate, rank, and share.
+
+Your project is completed, and now you can get to casting.  Each character/role is collapsed to show only the highest rated audition by default.  To view the audition, there will be a play button that pops out a video (if necessary) and begins playback.  To view other auditions and change ratings, simply expand the role with the dropdown arrow.  The overall rating an audition has received (based on the average of all user and associate ratings) will dictate how highly it is ranked on the role’s audition list.
+
+You can now share the project with your associates.  Simply copy the link and send it to them.  By default, anyone with the link may access the project, but for added security, you may create a password, as well.  When an associate accesses the project, they’ll be asked to sign-in via Facebook.  This is simply to keep associate ratings separate from each other, and for the user to be able to quickly identify who offered which rating.
+
+To save everyone money, you may download the entire project to your hard drive and open it in your web browser.  Some functionality will likely be lost, but you’ll be able to keep the project for your records, and you can then discard everything you’ve entered on the website and start from scratch for a new project without paying for more of our server space.
+-----------------------

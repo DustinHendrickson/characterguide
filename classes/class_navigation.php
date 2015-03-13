@@ -29,16 +29,21 @@ class Navigation {
             if (Functions::Check_User_Permissions('Staff')){
             echo "<li><a href='#'>Staff</a>";
             echo "<ul>";
-            echo "<li><a href='?view=blog_admin'>Blog Admin</a></li>";
+            echo "<li><a href='?view=blog_admin'>News Admin</a></li>";
             echo "<li><a href='?view=edit_user'>Edit Users</a></li>";
             echo "<li><a href='?view=upload'>Upload File</a></li>";
             echo "</ul></li>";
             }
 
+            echo "<li><a href='#'>Projects</a>";
+            echo "<ul>";
+            echo "<li><a href='?view=create_project'>Create New</a></li>";
+            echo "<li><a href='?view=manage_project'>Manage</a></li>";
+            echo "</ul></li>";
+
             echo "<li><a href='#'>User</a>";
             echo "<ul>";
             echo "<li><a href='?view=settings'>Settings</a></li>";
-            echo "<li><a href='?view=points'>Points</a></li>";
             echo "</ul></li>";
 
             echo "</ul></nav>";
@@ -49,7 +54,7 @@ class Navigation {
     {
             if(Functions::Check_User_Permissions('User')) {
                 $User = new User($_SESSION['ID']);
-                echo "<div id='pointrefresh'><img height='20px' width='20px' src='../img/ajax-loader.gif'> <b>Loading User...</b></div>";
+                echo "<a href='?view=my_account'>" . $_SESSION['Name'] . "</a> | <a href='?view=logout'>Logout</a>";
             } else {
                 echo "
                     <form action='/' method='post'>
@@ -75,10 +80,10 @@ class Navigation {
     {
         $Nav_Items = array();
 
-        array_push($Nav_Items, "<div class='NavItem'><a href='?view=blog'><img width='75' height='75' src='img/News.png'></img> Updates</a></div>\n");
-        array_push($Nav_Items, "<div class='NavItem'><a href='?view=aboutme'><img width='75' height='75' src='img/Staff.png'></img> About Us</a></div>\n");
-        array_push($Nav_Items, "<div class='NavItem'><a href='?view=projects'><img width='75' height='75' src='img/Products.png'></img> Services</a></div>\n");
-        array_push($Nav_Items, "<div class='NavItem'><a href='?view=contact'><img width='75' height='75' src='img/Contact.png'></img> Contact</a></div>\n");
+        array_push($Nav_Items, "<div class='NavItem'><a href='?view=blog'> News</a></div>\n");
+        array_push($Nav_Items, "<div class='NavItem'><a href='?view=aboutus'> About Us</a></div>\n");
+        array_push($Nav_Items, "<div class='NavItem'><a href='?view=services'> Services</a></div>\n");
+        array_push($Nav_Items, "<div class='NavItem'><a href='?view=contact'> Contact</a></div>\n");
 
         foreach($Nav_Items as $Nav_Item){
             echo $Nav_Item;

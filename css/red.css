@@ -17,3 +17,7 @@ nav ul {
 }
 
 a:active { color: red; }   /* selected link */
+
+#Public-Navigation {
+    background-color: red;
+}

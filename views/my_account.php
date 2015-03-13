@@ -50,15 +50,6 @@ switch ($_POST['Mode'])
 
             <tr>
                 <td>
-                    Fight Name:
-                </td>
-                <td>
-                    <input size='50' type='text' value='<?php echo $User->FightBot_Name; ?>' name='FightBot_Name'> <br />
-                </td>
-            </tr>
-
-            <tr>
-                <td>
                     Email:
                 </td>
                 <td>

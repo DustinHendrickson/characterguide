@@ -2,7 +2,7 @@
 
     $Blog = new Blog();
 
-    echo "<div class='ContentHeader'>Latest Blog Posts...</div>";
+    echo "<div class='ContentHeader'>Latest News Posts...</div>";
     echo "<hr>";
     $Blog->Write_Pagination_Nav();
 
