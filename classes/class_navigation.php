@@ -35,10 +35,9 @@ class Navigation {
             echo "</ul></li>";
             }
 
-            echo "<li><a href='#'>Projects</a>";
+            echo "<li><a href='#'>Character Guide</a>";
             echo "<ul>";
-            echo "<li><a href='?view=create_project'>Create New</a></li>";
-            echo "<li><a href='?view=manage_project'>Manage</a></li>";
+            echo "<li><a href='?view=project_manage'>Manage Projects</a></li>";
             echo "</ul></li>";
 
             echo "<li><a href='#'>User</a>";
