@@ -14,7 +14,7 @@ Write_Log('views',"Site has logged a page view.");
         <link href="css/frontend.css" rel="stylesheet" type="text/css">
         <?php $User = new User($_SESSION['ID']); $User->Display_Theme(); ?>
         <TITLE>
-        DustinHendrickson.com - Official Site
+        Character Guide Creator
         </TITLE>
     </HEAD>
 
