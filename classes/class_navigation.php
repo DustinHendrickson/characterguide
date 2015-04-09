@@ -37,7 +37,10 @@ class Navigation {
 
             echo "<li><a href='#'>Character Guide</a>";
             echo "<ul>";
-            echo "<li><a href='?view=project_manage'>Manage Projects</a></li>";
+            echo "<li><a href='?view=project_admin'>Manage Projects</a></li>";
+            echo "<li><a href='?view=scene_admin'>Manage Scenes</a></li>";
+            echo "<li><a href='?view=character_admin'>Manage Characters</a></li>";
+            echo "<li><a href='?view=audition_admin'>Manage Auditions</a></li>";
             echo "</ul></li>";
 
             echo "<li><a href='#'>User</a>";

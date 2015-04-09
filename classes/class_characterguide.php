@@ -437,6 +437,23 @@ class CharacterGuide
         
     }
 
+
+    public function Display_Templated_Object($Parameters, $Template) {
+
+        //Template Engine
+        //This is where we setup the ID's
+        //and their values that will get replaced.
+        foreach($Parameters as $ParameterKey => $ParameterValue){
+            $Template_Replacement[$ParameterKey] = $ParameterValue;
+        }
+
+        //Replace the template strings with their values.
+        $Template_Return = str_replace(array_keys($Template_Replacement),array_values($Template_Replacement),$Template);
+
+        echo $Template_Return;
+
+    }
+
     //=========================================================
     public function Get_All_Projects_For_User($UserID) {
         $SQL = "SELECT * FROM projects WHERE Owner_ID = :Owner_ID";
@@ -454,9 +471,43 @@ class CharacterGuide
         return $Result;
     }
 
+    public function Get_All_Scene_Info($SceneID) {
+        $SQL = "SELECT * FROM scenes WHERE ID = :SceneID";
+        $Array = array(':SceneID' => $SceneID);
+        $Result = $this->Connection->Custom_Query($SQL, $Array);
+
+        return $Result;
+    }
+
+    public function Get_All_Scenes_For_User($UserID) {
+        $SQL = "SELECT scenes.ID, scenes.Title, scenes.Project_ID, projects.Owner_ID FROM scenes INNER JOIN projects on scenes.Project_ID = projects.ID WHERE projects.Owner_ID = :User_ID";
+        $Array = array(':User_ID' => $UserID);
+        $Result = $this->Connection->Custom_Query($SQL, $Array, true);
+
+        return $Result;
+    }
+
+    public function Get_All_Scenes_For_Character($CharacterID) {
+        $SQL = "SELECT * FROM characters WHERE ID = :ID";
+        $Array = array(':ID' => $CharacterID);
+        $Result = $this->Connection->Custom_Query($SQL, $Array);
+
+        $Scene_Array = explode(",", $Result['In_Scenes']);
+
+        return $Scene_Array;
+    }
+
     public function Get_All_Characters_In_Scene($SceneID) {
-        $SQL = "SELECT * FROM characters WHERE In_Scenes LIKE ':In_Scenes,%' OR In_Scenes = :In_Scenes OR In_Scenes LIKE '%,:In_Scenes' OR In_Scenes LIKE '%,:In_Scenes,%'";
+        $SQL = "SELECT * FROM characters WHERE FIND_IN_SET( :In_Scenes, In_Scenes )";
         $Array = array(':In_Scenes' => $SceneID);
+        $Result = $this->Connection->Custom_Query($SQL, $Array, true);
+
+        return $Result;
+    }
+
+    public function Get_All_Characters_For_User($UserID) {
+        $SQL = "SELECT * FROM characters WHERE Owner_ID = :Owner_ID";
+        $Array = array(':Owner_ID' => $UserID);
         $Result = $this->Connection->Custom_Query($SQL, $Array, true);
 
         return $Result;

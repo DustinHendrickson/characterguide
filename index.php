@@ -7,8 +7,10 @@ Write_Log('views',"Site has logged a page view.");
 <HTML>
     <HEAD>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js" type="text/javascript"></script>
+        <script type="text/javascript" src="uploadify/jquery.uploadify.js"></script>
         <script src="js/jquery/jquery.growl.js" type="text/javascript"></script>
         <link href="css/jquery.growl.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" type="text/css" href="uploadify/uploadify.css" />
 
         <?php Functions::RefreshDivs(); Functions::RefreshDivs('showtime'); Functions::RefreshDivs('pointrefresh'); ?>
         <link href="css/frontend.css" rel="stylesheet" type="text/css">
