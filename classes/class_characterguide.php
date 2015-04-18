@@ -122,6 +122,36 @@ class CharacterGuide
         
     }
 
+    public function Get_Global_Project_Selector($UserID) {
+        $All_Projects = $this->Get_All_Projects_For_User($UserID);
+
+        $Project_Select .= "<form action='' method='post' id='Project_ID_Form' onchange='document.forms.Project_ID_Form.submit()'>";
+        $Project_Select .= "<select id='Project_ID' name='Project_ID' >";
+        foreach($All_Projects as $Project) {
+            $Selected = "";
+            if($_SESSION['Project_ID'] == $Project['ID']) { $Selected = "selected"; }
+            $Project_Select .= "<option {$Selected} value='{$Project['ID']}'> {$Project['Title']} </option>";
+        }
+        $Project_Select .= "</select>";
+        $Project_Select .= "</form>";
+
+        return $Project_Select;
+    }
+
+    public function Get_Project_Selector($UserID) {
+        $All_Projects = $this->Get_All_Projects_For_User($UserID);
+
+        $Project_Select .= "<select id='Project_ID' name='Project_ID' >";
+        foreach($All_Projects as $Project) {
+            $Selected = "";
+            if($_SESSION['Project_ID'] == $Project['ID']) { $Selected = "selected"; }
+            $Project_Select .= "<option {$Selected} value='{$Project['ID']}'> {$Project['Title']} </option>";
+        }
+        $Project_Select .= "</select>";
+
+        return $Project_Select;
+    }
+
     // SCENES ===========================================
     public function Create_Scene($Parameters) { // Parameters accepted, Title, Project_ID
 
@@ -487,6 +517,7 @@ class CharacterGuide
         return $Result;
     }
 
+
     public function Get_All_Scenes_For_Character($CharacterID) {
         $SQL = "SELECT * FROM characters WHERE ID = :ID";
         $Array = array(':ID' => $CharacterID);
@@ -508,6 +539,14 @@ class CharacterGuide
     public function Get_All_Characters_For_User($UserID) {
         $SQL = "SELECT * FROM characters WHERE Owner_ID = :Owner_ID";
         $Array = array(':Owner_ID' => $UserID);
+        $Result = $this->Connection->Custom_Query($SQL, $Array, true);
+
+        return $Result;
+    }
+
+    public function Get_All_Characters_For_Project($Project_ID) {
+        $SQL = "SELECT * FROM characters WHERE Project_ID = :Project_ID";
+        $Array = array(':Project_ID' => $Project_ID);
         $Result = $this->Connection->Custom_Query($SQL, $Array, true);
 
         return $Result;

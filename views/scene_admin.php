@@ -3,6 +3,11 @@
     Functions::Check_User_Permissions_Redirect("User");
     $User = new User($_SESSION['ID']);
 
+    $CharacterGuide = new CharacterGuide();
+
+    if (isset($_POST['Project_ID'])) {$_SESSION['Project_ID'] = $_POST['Project_ID']; }
+    echo $CharacterGuide->Get_Global_Project_Selector($_SESSION['ID']);
+
     //Logic to perform based on post data.
     $String_Protector_Array = array("<script","</script>","<source","<audio","('","')", "window.location", "onerror=");
     switch ($_POST['Mode'])
@@ -18,6 +23,7 @@
             $CharacterGuide = new CharacterGuide();
             $Passed_Parameters['Title'] = str_replace($String_Protector_Array,"",$_POST['Title']);
             $Passed_Parameters['Project_ID'] = str_replace($String_Protector_Array,"",$_POST['Project_ID']);
+            $Passed_Parameters['Owner_ID'] = $_SESSION['ID'];
             $CharacterGuide->Create_Scene($Passed_Parameters);
             break;
 
@@ -27,17 +33,8 @@
             break;
     }
 
-    //Build Blog data and page for editing.
-    $CharacterGuide = new CharacterGuide();
-    $All_Projects = $CharacterGuide->Get_All_Projects_For_User($_SESSION['ID']);
 
-    $Project_Select .= "<select name='Project_ID'>";
-    foreach($All_Projects as $Project) {
-        $Selected = "";
-        if($_POST['Project_ID'] == $Project['ID']) { $Selected = "selected"; }
-        $Project_Select .= "<option {$Selected} value='{$Project['ID']}'> {$Project['Title']} </option>";
-    }
-    $Project_Select .= "</select>";
+    $Project_Select = $CharacterGuide->Get_Project_Selector($_SESSION['ID']);
 
     //Front end to Edit or Delete a blog entry.
     $Template = "
@@ -128,7 +125,7 @@
 
     echo "<div class='BorderBox'>";
 
-    if ($_POST['Project_ID']) {
+    if ($_SESSION['Project_ID']) {
         $All_Scenes = $CharacterGuide->Get_All_Scenes_In_Project($_POST['Project_ID']);
         foreach ($All_Scenes as $Scene) {
 

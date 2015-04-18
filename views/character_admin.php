@@ -3,6 +3,11 @@
     Functions::Check_User_Permissions_Redirect("User");
     $User = new User($_SESSION['ID']);
 
+    $CharacterGuide = new CharacterGuide();
+
+    if (isset($_POST['Project_ID'])) {$_SESSION['Project_ID'] = $_POST['Project_ID']; }
+    echo $CharacterGuide->Get_Global_Project_Selector($_SESSION['ID']);
+
     //Logic to perform based on post data.
     $String_Protector_Array = array("<script","</script>","<source","<audio","('","')", "window.location", "onerror=");
     switch ($_POST['Mode'])
@@ -28,6 +33,7 @@
             $Passed_Parameters['Description'] = str_replace($String_Protector_Array,"",$_POST['Description']);
             $Passed_Parameters['Gender'] = str_replace($String_Protector_Array,"",$_POST['Gender']);
             $Passed_Parameters['In_Scenes'] = str_replace($String_Protector_Array,"",$In_Scenes);
+            $Passed_Parameters['Project_ID'] = str_replace($String_Protector_Array,"",$_POST['Project_ID']);
             $Passed_Parameters['Owner_ID'] = $_SESSION['ID'];
             $CharacterGuide->Create_Character($Passed_Parameters);
             break;
@@ -37,9 +43,6 @@
             $CharacterGuide->Delete_Character($_POST['ID']);
             break;
     }
-
-    //Build Blog data and page for editing.
-    $CharacterGuide = new CharacterGuide();
 
     $SearchAll_Scenes = $CharacterGuide->Get_All_Scenes_For_User($_SESSION['ID']);
     $SearchScene_Select .= "<select name='SearchScene_ID'>";
@@ -186,7 +189,7 @@
         }
 
         if($_POST['SearchScene_ID'] == "All") {
-            $All_Characters = $CharacterGuide->Get_All_Characters_For_User($_SESSION['ID']);
+            $All_Characters = $CharacterGuide->Get_All_Characters_For_Project($_SESSION['Project_ID']);
         }
 
         if ($All_Characters) {
