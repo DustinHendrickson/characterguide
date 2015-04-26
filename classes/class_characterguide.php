@@ -113,9 +113,16 @@ class CharacterGuide
 
         if ($Results){
             Toasts::addNewToast('Project Delete ['.$ProjectID .'] successfully deleted.','success');
+
+            $Scenes = $this->Get_All_Scenes_In_Project($ProjectID);
+            foreach($Scenes as $Scene) {
+                $this->Delete_Scene($Scene['ID']);
+            }
+
         } else {
             Toasts::addNewToast('Project Delete ['.$ProjectID .'] encountered an error.','error');
         }
+
     }
 
     public function Rank_Project() {
@@ -126,7 +133,7 @@ class CharacterGuide
         $All_Projects = $this->Get_All_Projects_For_User($UserID);
 
         $Project_Select .= "<form action='' method='post' id='Project_ID_Form' onchange='document.forms.Project_ID_Form.submit()'>";
-        $Project_Select .= "<select id='Project_ID' name='Project_ID' >";
+        $Project_Select .= "<b>Project:</b> <select id='Project_ID' name='Project_ID' >";
         foreach($All_Projects as $Project) {
             $Selected = "";
             if($_SESSION['Project_ID'] == $Project['ID']) { $Selected = "selected"; }
@@ -247,6 +254,13 @@ class CharacterGuide
 
         if ($Results){
             Toasts::addNewToast('Scene Delete ['.$SceneID .'] successfully deleted.','success');
+
+            $Characters = $this->Get_All_Characters_In_Scene($SceneID);
+
+            foreach($Characters as $Character) {
+                $this->Delete_Character($Character['ID']);
+            }
+
         } else {
             Toasts::addNewToast('Scene Delete ['.$SceneID .'] encountered an error.','error');
         }
@@ -353,6 +367,12 @@ class CharacterGuide
 
         if ($Results){
             Toasts::addNewToast('Character Delete ['.$CharacterID .'] successfully deleted.','success');
+
+            $Auditions = $this->Get_All_Auditions_For_Character($CharacterID);
+
+            foreach($Auditions as $Audition) {
+                $this->Delete_Audition($Audition['ID']);
+            }
         } else {
             Toasts::addNewToast('Character Delete ['.$CharacterID .'] encountered an error.','error');
         }
@@ -360,6 +380,50 @@ class CharacterGuide
 
     public function Rank_Character() {
         
+    }
+
+    public function Get_Character_Selector($ProjectID) {
+        $All_Characters = $this->Get_All_Characters_For_Project($ProjectID);
+
+        $Character_Select .= "<select id='Character_ID' name='Character_ID' >";
+        foreach($All_Characters as $Character) {
+            $Selected = "";
+            if($_SESSION['Character_ID'] == $Character['ID']) { $Selected = "selected"; }
+            $Character_Select .= "<option {$Selected} value='{$Character['ID']}'> {$Character['Name']} </option>";
+        }
+        $Character_Select .= "</select>";
+
+        return $Character_Select;
+    }
+
+    public function Get_Audition_Character_Selector($ProjectID, $AuditionID) {
+        $All_Characters = $this->Get_All_Characters_For_Project($ProjectID);
+        $Character_ID = $this->Get_Character_For_Audition($AuditionID)["Character_ID"];
+
+        $Character_Select .= "<select id='Character_ID' name='Character_ID' >";
+        foreach($All_Characters as $Character) {
+            $Selected = "";
+            if($Character_ID == $Character['ID']) { $Selected = "selected"; }
+            $Character_Select .= "<option {$Selected} value='{$Character['ID']}'> {$Character['Name']} </option>";
+        }
+        $Character_Select .= "</select>";
+
+        return $Character_Select;
+    }
+
+    public function Get_Search_Character_Selector($ProjectID) {
+        $All_Characters = $this->Get_All_Characters_For_Project($ProjectID);
+
+        $Character_Select .= "<select id='Search_Character_ID' name='Search_Character_ID' >";
+         $Character_Select .=  "<option value='ALL'> All Characters </option>";
+        foreach($All_Characters as $Character) {
+            $Selected = "";
+            if($_SESSION['Search_Character_ID'] == $Character['ID']) { $Selected = "selected"; }
+            $Character_Select .= "<option {$Selected} value='{$Character['ID']}'> {$Character['Name']} </option>";
+        }
+        $Character_Select .= "</select>";
+
+        return $Character_Select;
     }
 
     // AUDITIONS ========================================
@@ -463,6 +527,41 @@ class CharacterGuide
         }
     }
 
+    public function Upload_Audition($AuditionID, $FileType, $FilePath) {
+            $User = new User($_SESSION['ID']);
+
+            // We check to make sure that there is no error in the process.
+            if ($_FILES["file"]["error"] > 0) {
+                echo "Error: " . $_FILES["file"]["error"] . "<br>";
+                echo "<hr><br>";
+                Toasts::addNewToast('Something went wrong with the file upload. Please try again.','error');
+                Write_Log("upload", "UPLOAD:ERROR " . $User->Username . " tried uploading file " . $_FILES["file"]["name"] . " and ran into error " . $_FILES["file"]["error"]);
+            } else {
+
+                // Make sure there is not already a file with that name on the system.
+                if (file_exists("/var/www/uploads/" . $_FILES["file"]["name"])) {
+                    echo "ERROR: " . $_FILES["file"]["name"] . " already exists. ";
+                    Toasts::addNewToast('That file already exists, please pick a different file or rename it.','error');
+                    Write_Log("upload", "UPLOAD:ERROR " . $User->Username . " tried uploading file " . $_FILES["file"]["name"] . " but it already exists.");
+                } else {
+
+                    // Everything looks good so we upload the file and output some statistics for the user.
+                    echo "<b> File Stats </b><br>";
+                    echo "<b>File Name:</b> " . $_FILES["file"]["name"] . "<br>";
+                    echo "<b>Type:</b> " . $_FILES["file"]["type"] . "<br>";
+                    echo "<b>Size:</b> " . ($_FILES["file"]["size"] / 1024) . " kB<br><br>";
+
+                    // Here we move the file from the tmp directory to the server uploads directory and link the file to the user.
+                    move_uploaded_file($_FILES["file"]["tmp_name"], "/var/www/uploads/" . $_FILES["file"]["name"]);
+                    echo "<b>Link to file:</b> " . "<a target='_blank' href='https://dustinhendrickson.com/uploads/" . $_FILES["file"]["name"] . "'> https://dustinhendrickson.com/uploads/" . $_FILES["file"]["name"] ."</a>";
+                    Toasts::addNewToast('File upload was successful.','success');
+                    Write_Log("upload", "UPLOAD:SUCCESS " . $User->Username . " successfully uploaded file " . $_FILES["file"]["name"]);
+                }
+
+            echo "<hr><br>";
+            }
+    }
+
     public function Rank_Audition() {
         
     }
@@ -489,6 +588,14 @@ class CharacterGuide
         $SQL = "SELECT * FROM projects WHERE Owner_ID = :Owner_ID";
         $Array = array(':Owner_ID' => $UserID);
         $Result = $this->Connection->Custom_Query($SQL, $Array, true);
+
+        return $Result;
+    }
+
+    public function Get_First_Project_For_User($UserID) {
+        $SQL = "SELECT * FROM projects WHERE ID = (SELECT MIN(ID) FROM projects WHERE Owner_ID = :Owner_ID)";
+        $Array = array(':Owner_ID' => $UserID);
+        $Result = $this->Connection->Custom_Query($SQL, $Array);
 
         return $Result;
     }
@@ -528,6 +635,14 @@ class CharacterGuide
         return $Scene_Array;
     }
 
+    public function Get_All_Scenes_For_Project($ProjectID) {
+        $SQL = "SELECT * FROM scenes WHERE Project_ID = :Project_ID";
+        $Array = array(':Project_ID' => $ProjectID);
+        $Result = $this->Connection->Custom_Query($SQL, $Array, true);
+
+        return $Result;
+    }
+
     public function Get_All_Characters_In_Scene($SceneID) {
         $SQL = "SELECT * FROM characters WHERE FIND_IN_SET( :In_Scenes, In_Scenes )";
         $Array = array(':In_Scenes' => $SceneID);
@@ -552,12 +667,68 @@ class CharacterGuide
         return $Result;
     }
 
+    public function Get_Character_For_Audition($Audition_ID) {
+        $SQL = "SELECT Character_ID FROM auditions WHERE ID = :ID";
+        $Array = array(':ID' => $Audition_ID);
+        $Result = $this->Connection->Custom_Query($SQL, $Array);
+
+        return $Result;
+    }
+
     public function Get_All_Auditions_For_Character($CharacterID) {
         $SQL = "SELECT * FROM auditions WHERE Character_ID = :Character_ID";
         $Array = array(':Character_ID' => $CharacterID);
         $Result = $this->Connection->Custom_Query($SQL, $Array, true);
 
         return $Result;
+    }
+
+    public function Get_All_Auditions_For_User($UserID) {
+        $SQL = "SELECT * FROM auditions WHERE Owner_ID = :Owner_ID";
+        $Array = array(':Owner_ID' => $UserID);
+        $Result = $this->Connection->Custom_Query($SQL, $Array, true);
+
+        return $Result;
+    }
+
+    public function Get_All_Auditions_For_Project($ProjectID) {
+        $SQL = "SELECT * FROM auditions WHERE Project_ID = :Project_ID";
+        $Array = array(':Project_ID' => $ProjectID);
+        $Result = $this->Connection->Custom_Query($SQL, $Array, true);
+
+        return $Result;
+    }
+
+    public function Get_Project_Count($UserID) {
+        $SQL = "SELECT COUNT(*) FROM projects WHERE Owner_ID = :Owner_ID";
+        $Array = array(':Owner_ID' => $UserID);
+        $Result = $this->Connection->Custom_Count_Query($SQL, $Array);
+
+        return $Result[0];
+    }
+
+    public function Get_Scene_Count($ProjectID) {
+        $SQL = "SELECT COUNT(*) FROM scenes WHERE Project_ID = :Project_ID";
+        $Array = array(':Project_ID' => $ProjectID);
+        $Result = $this->Connection->Custom_Count_Query($SQL, $Array);
+
+        return $Result[0];
+    }
+
+    public function Get_Character_Count($ProjectID) {
+        $SQL = "SELECT COUNT(*) FROM characters WHERE Project_ID = :Project_ID";
+        $Array = array(':Project_ID' => $ProjectID);
+        $Result = $this->Connection->Custom_Count_Query($SQL, $Array);
+
+        return $Result[0];
+    }
+
+    public function Get_Audition_Count($ProjectID) {
+        $SQL = "SELECT COUNT(*) FROM auditions WHERE Project_ID = :Project_ID";
+        $Array = array(':Project_ID' => $ProjectID);
+        $Result = $this->Connection->Custom_Count_Query($SQL, $Array);
+
+        return $Result[0];
     }
 
 }
