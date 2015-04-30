@@ -517,50 +517,73 @@ class CharacterGuide
     }
 
     public function Delete_Audition($AuditionID) {
+        $Audition = $this->Get_Audition($AuditionID);
+
+        if (!empty($Audition['Audio_File'])) { $Audio_Path = "/var/www2/auditions/audio/" . $_SESSION['ID'] . "/" . $Audition['Audio_File']; }
+        if (!empty($Audition['Video_File'])) { $Video_Path = "/var/www2/auditions/video/" . $_SESSION['ID'] . "/" . $Audition['Video_File']; }
+
         $Post_Array = array (':ID'=>$AuditionID);
         $Results = $this->Connection->Custom_Execute("DELETE FROM auditions WHERE ID=:ID", $Post_Array);
 
         if ($Results){
             Toasts::addNewToast('Audition Delete ['.$AuditionID .'] successfully deleted.','success');
+            if (!empty($Audition['Audio_File'])) { $this->Delete_File($Audio_Path); }
+            if (!empty($Audition['Video_File'])) { $this->Delete_File($Video_Path); }
         } else {
             Toasts::addNewToast('Audition Delete ['.$AuditionID .'] encountered an error.','error');
         }
     }
 
-    public function Upload_Audition($AuditionID, $FileType, $FilePath) {
+    public function Upload_Audio($File) {
             $User = new User($_SESSION['ID']);
+            $PATH = "/var/www2/auditions/audio/" . $_SESSION['ID'] . "/";
 
             // We check to make sure that there is no error in the process.
-            if ($_FILES["file"]["error"] > 0) {
-                echo "Error: " . $_FILES["file"]["error"] . "<br>";
-                echo "<hr><br>";
+            if ($File['Audio_File']["error"] > 0) {
                 Toasts::addNewToast('Something went wrong with the file upload. Please try again.','error');
-                Write_Log("upload", "UPLOAD:ERROR " . $User->Username . " tried uploading file " . $_FILES["file"]["name"] . " and ran into error " . $_FILES["file"]["error"]);
+                Write_Log("upload", "UPLOAD:ERROR " . $User->Username . " tried uploading file " . $File['Audio_File']["name"] . " and ran into error " . $File['Audio_File']["error"]);
             } else {
-
                 // Make sure there is not already a file with that name on the system.
-                if (file_exists("/var/www/uploads/" . $_FILES["file"]["name"])) {
-                    echo "ERROR: " . $_FILES["file"]["name"] . " already exists. ";
+                if (!file_exists($PATH)) { mkdir($PATH, 0777, true); Write_Log("upload", "Created new directory @ " . $PATH);}
+                if (file_exists($PATH . $File['Audio_File']["name"])) {
                     Toasts::addNewToast('That file already exists, please pick a different file or rename it.','error');
-                    Write_Log("upload", "UPLOAD:ERROR " . $User->Username . " tried uploading file " . $_FILES["file"]["name"] . " but it already exists.");
+                    Write_Log("upload", "UPLOAD:ERROR " . $User->Username . " tried uploading file " . $File['Audio_File']["name"] . " but it already exists.");
                 } else {
-
-                    // Everything looks good so we upload the file and output some statistics for the user.
-                    echo "<b> File Stats </b><br>";
-                    echo "<b>File Name:</b> " . $_FILES["file"]["name"] . "<br>";
-                    echo "<b>Type:</b> " . $_FILES["file"]["type"] . "<br>";
-                    echo "<b>Size:</b> " . ($_FILES["file"]["size"] / 1024) . " kB<br><br>";
-
                     // Here we move the file from the tmp directory to the server uploads directory and link the file to the user.
-                    move_uploaded_file($_FILES["file"]["tmp_name"], "/var/www/uploads/" . $_FILES["file"]["name"]);
-                    echo "<b>Link to file:</b> " . "<a target='_blank' href='https://dustinhendrickson.com/uploads/" . $_FILES["file"]["name"] . "'> https://dustinhendrickson.com/uploads/" . $_FILES["file"]["name"] ."</a>";
-                    Toasts::addNewToast('File upload was successful.','success');
-                    Write_Log("upload", "UPLOAD:SUCCESS " . $User->Username . " successfully uploaded file " . $_FILES["file"]["name"]);
+                    move_uploaded_file($File['Audio_File']["tmp_name"], $PATH . $File['Audio_File']["name"]);
+                    Toasts::addNewToast('File ' . $File['Audio_File']["name"] .' upload was successful.','success');
+                    Write_Log("upload", "UPLOAD:SUCCESS " . $User->Username . " successfully uploaded file " . $File['Audio_File']["name"]);
                 }
-
-            echo "<hr><br>";
             }
     }
+
+    public function Upload_Video($File) {
+            $User = new User($_SESSION['ID']);
+            $PATH = "/var/www2/auditions/video/" . $_SESSION['ID'] . "/";
+
+            // We check to make sure that there is no error in the process.
+            if ($File['Video_File']["error"] > 0) {
+                Toasts::addNewToast('Something went wrong with the file upload. Please try again.','error');
+                Write_Log("upload", "UPLOAD:ERROR " . $User->Username . " tried uploading file " . $File['Video_File']["name"] . " and ran into error " . $File['Video_File']["error"]);
+            } else {
+                // Make sure there is not already a file with that name on the system.
+                if (!file_exists($PATH)) { mkdir($PATH, 0777, true); Write_Log("upload", "Created new directory @ " . $PATH); }
+                if (file_exists($PATH . $File['Video_File']["name"])) {
+                    Toasts::addNewToast('That file already exists, please pick a different file or rename it.','error');
+                    Write_Log("upload", "UPLOAD:ERROR " . $User->Username . " tried uploading file " . $File['Video_File']["name"] . " but it already exists.");
+                } else {
+                    // Here we move the file from the tmp directory to the server uploads directory and link the file to the user.
+                    move_uploaded_file($File['Video_File']["tmp_name"], $PATH . $File['Video_File']["name"]);
+                    Toasts::addNewToast('File ' . $File['Video_File']["name"] . ' upload was successful.','success');
+                    Write_Log("upload", "UPLOAD:SUCCESS " . $User->Username . " successfully uploaded file " . $File['Video_File']["name"]);
+                }
+            }
+    }
+
+    public function Delete_File($Path) {
+        unlink($Path);
+    }
+
 
     public function Rank_Audition() {
         
@@ -670,6 +693,14 @@ class CharacterGuide
     public function Get_Character_For_Audition($Audition_ID) {
         $SQL = "SELECT Character_ID FROM auditions WHERE ID = :ID";
         $Array = array(':ID' => $Audition_ID);
+        $Result = $this->Connection->Custom_Query($SQL, $Array);
+
+        return $Result;
+    }
+
+    public function Get_Audition($AuditionID) {
+        $SQL = "SELECT * FROM auditions WHERE ID = :ID";
+        $Array = array(':ID' => $AuditionID);
         $Result = $this->Connection->Custom_Query($SQL, $Array);
 
         return $Result;

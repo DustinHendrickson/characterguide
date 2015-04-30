@@ -33,12 +33,15 @@
                 case 'Add':
                     $CharacterGuide = new CharacterGuide();
                     $Passed_Parameters['Notes'] = str_replace($String_Protector_Array,"",$_POST['Notes']);
-                    $Passed_Parameters['Audio_File'] = str_replace($String_Protector_Array,"",$_FILES['Audio_File']["name"]);
-                    $Passed_Parameters['Video_File'] = str_replace($String_Protector_Array,"",$_FILES['Video_File']["name"]);
+                    $Passed_Parameters['Audio_File'] = $_FILES['Audio_File']["name"];
+                    $Passed_Parameters['Video_File'] = $_FILES['Video_File']["name"];
                     $Passed_Parameters['Project_ID'] = str_replace($String_Protector_Array,"",$_SESSION['Project_ID']);
                     $Passed_Parameters['Character_ID'] = str_replace($String_Protector_Array,"",$_POST['Character_ID']);
                     $Passed_Parameters['Owner_ID'] = $_SESSION['ID'];
+                    Write_Log('debug', "Test: " . $_FILES['Audio_File']["name"]);
                     $CharacterGuide->Create_Audition($Passed_Parameters);
+                    if (!empty($_FILES['Audio_File']["name"])) { $CharacterGuide->Upload_Audio($_FILES); }
+                    if (!empty($_FILES['Video_File']["name"])) { $CharacterGuide->Upload_Video($_FILES); }
                     break;
 
                 case 'Delete':
@@ -72,7 +75,7 @@
                             Audio File:
                         </td>
                         <td>
-                            :Audio_File
+                            <a href='auditions/audio/{$_SESSION['ID']}/:Audio_File'> :Audio_File </a>
                         </td>
                     </tr>
                     <tr>
@@ -80,7 +83,7 @@
                             Video File:
                         </td>
                         <td>
-                            :Video_File
+                            <a href='auditions/video/{$_SESSION['ID']}/:Video_File'> :Video_File </a>
                         </td>
                     </tr>
                     <tr>
